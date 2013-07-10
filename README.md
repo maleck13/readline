@@ -1,7 +1,7 @@
 readline
 ========
 
-read line module for node js
+read line module for nodejs. Read a file line by line.
 
 TODO
 =====
