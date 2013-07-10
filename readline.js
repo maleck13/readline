@@ -5,13 +5,13 @@ var util = require('util');
 
 function readLine (file, opts){
 
-   if (!(this instanceof readLine)) return new readLine(file);;
+   if (!(this instanceof readLine)) return new readLine(file);
   
    EventEmitter.call(this);
    opts = opts || {};
    var self = this;
    var readStream = fs.createReadStream(file);
-   var nl = require('os').EOL.charCodeAt(0);
+   var nl = require('os').EOL.charCodeAt(0); //could prob change this to just be the number 10
    var line = [];   
 
    readStream.on("open",function (fd){
