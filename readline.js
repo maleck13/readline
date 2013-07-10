@@ -2,6 +2,7 @@ var fs = require('fs');
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 
+
 function readLine (file, opts){
 
    if (!(this instanceof readLine)) return new readLine(file);;
@@ -10,8 +11,7 @@ function readLine (file, opts){
    opts = opts || {};
    var self = this;
    var readStream = fs.createReadStream(file);
-   var nlChar = (opts["nlChar"]) ? opts["nlChar"] : "\n";
-   var nl = nlChar.charCodeAt(0);
+   var nl = require('os').EOL.charCodeAt(0);
    var line = [];   
 
    readStream.on("open",function (fd){
