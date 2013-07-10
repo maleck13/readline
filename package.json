@@ -4,13 +4,13 @@
   "description": "simple streaming readline module",
   "main": "readline.js",
   "scripts": {
-    "test": "tap --stderr test/*.js"
+    "test": "tap --tap  --stderr --timeout=120 test/*.js"
   },
   "dependencies":{},
   "devDependencies":{
    "tap":"0.4.3"
   },
-  "repository": "",
+  "repository": "git@github.com:maleck13/readline.git",
   "keywords": [
     "readline",
     "file"
