@@ -3,10 +3,7 @@ readline
 
 read line module for nodejs. Read a file line by line.
 
-TODO
-=====
 
-test different new line chars \r
 
 Example
 =======
