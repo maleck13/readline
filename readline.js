@@ -2,6 +2,10 @@ var fs = require('fs');
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 
+var newlines = [
+  13, // \r
+  10  // \n
+];
 
 function readLine (file, opts){
 
@@ -20,9 +24,11 @@ function readLine (file, opts){
    
    readStream.on("data", function (data){     
      for(var i=0; i < data.length; i++){
-        if(data[i] === nl){
-          var tmpBuf = new Buffer(line);
-          self.emit("line",tmpBuf.toString());
+        if(newlines.indexOf(data[i]) != -1){
+          if (line.length) {
+            var tmpBuf = new Buffer(line);
+            self.emit("line",tmpBuf.toString());
+          }
           line = [];
         }else{
           line.push(data[i]); 
@@ -35,6 +41,12 @@ function readLine (file, opts){
    });
 
    readStream.on("end", function (){
+    // emit last line if anything left over since EOF doesn't trigger it
+    if (line.length) { 
+      var tmpBuf = new Buffer(line);
+      self.emit("line",tmpBuf.toString());
+    }
+
     self.emit("end");
    });
    
