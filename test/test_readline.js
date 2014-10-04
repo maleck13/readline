@@ -14,7 +14,7 @@ test("test reading lines",function(t){
 
 test("numbers", function (t){
    var rl = readLine('./fixtures/nmbr.txt');
-   var answer = 21;
+   var answer = 28;
    var i=0;
    rl.on("line", function (line){
    	 	var num = Number(line);

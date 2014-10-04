@@ -15,7 +15,6 @@ function readLine (file, opts){
    opts = opts || {};
    var self = this;
    var readStream = fs.createReadStream(file);
-   var nl = require('os').EOL.charCodeAt(0); //could prob change this to just be the number 10
    var line = [];   
 
    readStream.on("open",function (fd){
@@ -24,7 +23,7 @@ function readLine (file, opts){
    
    readStream.on("data", function (data){     
      for(var i=0; i < data.length; i++){
-        if(newlines.indexOf(data[i]) != -1){
+        if(newlines.indexOf(data[i]) !== -1){
           if (line.length) {
             var tmpBuf = new Buffer(line);
             self.emit("line",tmpBuf.toString());
