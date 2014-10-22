@@ -9,7 +9,7 @@ npm install readline
 
 ## What's this?
 
-Line reader module for NodeJS. Reads a file and buffer new lines emitting a _line_ event for each line.
+Simple streaming readline module for NodeJS. Reads a file and buffer new lines emitting a _line_ event for each line.
 
 ## Usage
 ```js
