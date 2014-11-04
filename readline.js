@@ -34,7 +34,7 @@ var readLine = module.exports = function(file, opts) {
     self.emit('error', err);
   })
   .on('end', function() {
-    // Emit last line if anything left over since EOF doesn't trigger it.
+    // Emit last line if anything left over since EOF won't trigger it.
     if (line.length) emit(line);
     self.emit('end');
   })
