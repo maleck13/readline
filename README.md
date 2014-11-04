@@ -1,20 +1,28 @@
-readline
-========
+## _readline_
+> Read a file line by line.
 
-read line module for nodejs. Read a file line by line.
+## Install
 
-
-
-Example
-=======
-
+```sh
+npm install readline
 ```
-  var readline = require('readline');
-  var rl = readline("./somefile.txt");
-  rl.on("line", function (line){
-    //do something with the line of text
-  });
-  rl.on('error', function (e){
-    //something went wrong
+
+## What's this?
+
+Simple streaming readline module for NodeJS. Reads a file and buffer new lines emitting a _line_ event for each line.
+
+## Usage
+```js
+  var readline = require('readline'),
+      rl = readline('./somefile.txt');
+  rl.on('line', function(line) {
+    // do something with the line of text
+  })
+  .on('error', function(e) {
+    // something went wrong
   });
 ```
+
+## License
+
+BSD © [Craig Brookes](http://craigbrookes.com/)
