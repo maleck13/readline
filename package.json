@@ -1,6 +1,6 @@
 {
-  "name": "readline",
-  "version": "0.0.6",
+  "name": "linebyline",
+  "version": "0.0.7",
   "description": "Simple streaming readline module.",
   "main": "readline.js",
   "scripts": {
