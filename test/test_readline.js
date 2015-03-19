@@ -1,5 +1,7 @@
-var test = require("tap").test;
+var fs = require('fs');
 var readLine = require('../readline.js');
+var test = require("tap").test;
+
 test("test reading lines",function(t){
    console.error("reading large file line by line asserts may take a while");
    var rl = readLine('./fixtures/afile.txt');
@@ -60,3 +62,16 @@ test("line count", function(t){
 });
 
 
+test("byte count", function(t){
+  var rl = readLine('./fixtures/nmbr.txt');
+  var expect = fs.statSync('./fixtures/nmbr.txt').size;
+  var actual = 0;
+  rl.on("line", function (line, ln, byteCount){
+    console.log("byte count",byteCount);
+    actual=byteCount;
+  });
+  rl.on("end", function (){
+    t.ok(actual === expect,"byte count is correct");
+    t.end();
+  });
+});
