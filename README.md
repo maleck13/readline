@@ -3,9 +3,20 @@
 
 ## Install
 
+## Important. In node 10 there is a core module named readline. Please use linebyline instead, it is the same module just renamed:
+[Npm linebyline](https://www.npmjs.com/package/linebyline)
+
 ```sh
-npm install readline
+npm install linebyline
 ```
+
+## Test
+```sh
+npm install .
+npm test
+
+```
+
 
 ## What's this?
 
@@ -13,9 +24,9 @@ Simple streaming readline module for NodeJS. Reads a file and buffer new lines e
 
 ## Usage
 ```js
-  var readline = require('readline'),
+  var readline = require('linebyline'),
       rl = readline('./somefile.txt');
-  rl.on('line', function(line) {
+  rl.on('line', function(line, lineCount, byteCount) {
     // do something with the line of text
   })
   .on('error', function(e) {
