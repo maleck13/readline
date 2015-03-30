@@ -14,8 +14,9 @@ var readLine = module.exports = function(file, opts) {
   var self = this,
       line = [],
       lineCount = 0,
-      emit = function(line, count) {
-        self.emit('line', new Buffer(line).toString(), count);
+      byteCount = 0,
+      emit = function(line, lineCount, byteCount) {
+        self.emit('line', new Buffer(line).toString(), lineCount, byteCount);
       };
     this.input = fs.createReadStream(file);
     this.input.on('open', function(fd) {
@@ -23,9 +24,10 @@ var readLine = module.exports = function(file, opts) {
     })
   .on('data', function(data) {
      for (var i = 0; i < data.length; i++) {
+        byteCount++;
         if (0 <= newlines.indexOf(data[i])) { // Newline char was found.
           lineCount++;
-          if (line.length) emit(line, lineCount);
+          if (line.length) emit(line, lineCount, byteCount);
           line = []; // Empty buffer.
         } else {
           line.push(data[i]); // Buffer new line data.
@@ -39,7 +41,7 @@ var readLine = module.exports = function(file, opts) {
     // Emit last line if anything left over since EOF won't trigger it.
     if (line.length){
       lineCount++;
-      emit(line, lineCount);
+      emit(line, lineCount, byteCount);
     }
     self.emit('end');
   })

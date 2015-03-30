@@ -26,7 +26,7 @@ Simple streaming readline module for NodeJS. Reads a file and buffer new lines e
 ```js
   var readline = require('linebyline'),
       rl = readline('./somefile.txt');
-  rl.on('line', function(line) {
+  rl.on('line', function(line, lineCount, byteCount) {
     // do something with the line of text
   })
   .on('error', function(e) {
