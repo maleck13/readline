@@ -1,7 +1,7 @@
 {
-  "name": "readline",
+  "name": "linebyline",
   "version": "0.0.5",
-  "description": "Simple streaming readline module.",
+  "description": "Simple streaming readline module. Previously under readline",
   "main": "readline.js",
   "scripts": {
     "test": "tap --tap  --stderr --timeout=120 test/*.js"
@@ -13,6 +13,7 @@
   "repository": "git@github.com:maleck13/readline.git",
   "keywords": [
     "readline",
+    "line by line",
     "file"
   ],
   "author": "craig brookes",
