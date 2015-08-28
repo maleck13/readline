@@ -18,7 +18,7 @@ var readLine = module.exports = function(file, opts) {
       emit = function(line, lineCount, byteCount) {
         self.emit('line', new Buffer(line).toString(), lineCount, byteCount);
       };
-    this.input = fs.createReadStream(file, opts);
+    this.input = ('string' === typeof file)? fs.createReadStream(file, opts):file;
     this.input.on('open', function(fd) {
         self.emit('open', fd);
     })
