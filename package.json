@@ -1,7 +1,7 @@
 {
   "name": "linebyline",
-  "version": "0.0.8",
-  "description": "Simple streaming readline module. Reads a file line by line. Previously under readline",
+  "version": "0.0.9",
+  "description": "Simple streaming readline module.",
   "main": "readline.js",
   "scripts": {
     "test": "tap --tap  --stderr --timeout=120 test/*.js"
