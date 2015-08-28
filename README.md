@@ -33,6 +33,16 @@ Simple streaming readline module for NodeJS. Reads a file and buffer new lines e
     // something went wrong
   });
 ```
+##API
+## readfile(readingObject)
+### Params:
+
+* **** *readingObject* {file path or stream}
+
+### Return:
+
+* **EventEmitter** 
+
 
 ## License
 
