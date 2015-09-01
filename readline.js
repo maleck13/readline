@@ -1,10 +1,6 @@
 var fs = require('fs'),
     EventEmitter = require('events').EventEmitter,
-    util = require('util'),
-    newlines = [
-      13, // \r
-      10  // \n
-    ];
+    util = require('util');
 
 var readLine = module.exports = function(file, opts) {
   if (!(this instanceof readLine)) return new readLine(file);
@@ -25,7 +21,7 @@ var readLine = module.exports = function(file, opts) {
   .on('data', function(data) {
      for (var i = 0; i < data.length; i++) {
         byteCount++;
-        if (0 <= newlines.indexOf(data[i])) { // Newline char was found.
+        if (data[i] == 10 || data[i] == 13) { // Newline char was found.
           lineCount++;
           if (line.length) emit(line, lineCount, byteCount);
           line = []; // Empty buffer.
