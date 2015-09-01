@@ -61,6 +61,21 @@ test("line count", function(t){
   });
 });
 
+test("byte count after first line", function(t){
+  var rl = readLine('./fixtures/nmbr.txt');
+  var actual = 0;
+  var expect;
+  rl.on("line", function (line, ln, byteCount){
+    if (expect === undefined) {
+      expect = line.length;
+      console.log("byte count",byteCount);
+      actual=byteCount;
+
+      t.ok(actual === expect,"byte count is correct");
+      t.end();
+    }
+  });
+});
 
 test("byte count", function(t){
   var rl = readLine('./fixtures/nmbr.txt');
