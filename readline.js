@@ -1,10 +1,6 @@
 var fs = require('fs'),
     EventEmitter = require('events').EventEmitter,
-    util = require('util'),
-    newlines = [
-      13, // \r
-      10  // \n
-    ];
+    util = require('util');
 
 var readLine = module.exports = function(file, opts) {
   if (!(this instanceof readLine)) return new readLine(file);
@@ -24,14 +20,14 @@ var readLine = module.exports = function(file, opts) {
     })
   .on('data', function(data) {
      for (var i = 0; i < data.length; i++) {
-        byteCount++;
-        if (0 <= newlines.indexOf(data[i])) { // Newline char was found.
+        if (data[i] == 10 || data[i] == 13) { // Newline char was found.
           lineCount++;
           if (line.length) emit(line, lineCount, byteCount);
           line = []; // Empty buffer.
         } else {
           line.push(data[i]); // Buffer new line data.
         }
+        byteCount++;
      }
   })
   .on('error', function(err) {
@@ -39,7 +35,7 @@ var readLine = module.exports = function(file, opts) {
   })
   .on('end', function() {
     // Emit last line if anything left over since EOF won't trigger it.
-    if (line.length){
+    if (line.length) {
       lineCount++;
       emit(line, lineCount, byteCount);
     }
