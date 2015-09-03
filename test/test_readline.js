@@ -90,3 +90,25 @@ test("byte count", function(t){
     t.end();
   });
 });
+
+test("processing error passed on", function(t){
+  var rl = readLine('./fixtures/nmbr.txt');
+  var lastError;
+  var lineCalls = 0;
+
+  rl.on("line", function (line, ln, byteCount){
+    lineCalls++;
+    throw new Error('fake error');
+  });
+  rl.on("error", function (err){
+    if (!lastError) {
+      lastError = err;
+      t.ok(err.message === 'fake error','error is passed on');
+    }
+  });
+
+  rl.on("end", function (){
+    t.ok(lineCalls === 7, 'line count ok');
+    t.end();
+  });
+});
