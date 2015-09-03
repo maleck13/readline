@@ -12,7 +12,13 @@ var readLine = module.exports = function(file, opts) {
       lineCount = 0,
       byteCount = 0,
       emit = function(lineCount, byteCount) {
-        self.emit('line', new Buffer(line).toString(), lineCount, byteCount);
+        try {
+          self.emit('line', new Buffer(line).toString(), lineCount, byteCount);
+        } catch (err) {
+          self.emit('error', err);
+        } finally {
+          line = []; // Empty buffer.
+        }
       };
     this.input = ('string' === typeof file) ? fs.createReadStream(file, opts) : file;
     this.input.on('open', function(fd) {
@@ -23,7 +29,6 @@ var readLine = module.exports = function(file, opts) {
         if (data[i] == 10 || data[i] == 13) { // Newline char was found.
           lineCount++;
           if (line.length) emit(lineCount, byteCount);
-          line = []; // Empty buffer.
         } else {
           line.push(data[i]); // Buffer new line data.
         }
