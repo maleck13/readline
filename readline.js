@@ -7,14 +7,22 @@ var readLine = module.exports = function(file, opts) {
 
   EventEmitter.call(this);
   opts = opts || {};
+  opts.maxLineLength = opts.maxLineLength || 4096; // 4K
   var self = this,
-      line = [],
+      lineBuffer = new Buffer(opts.maxLineLength),
+      lineLength = 0,
       lineCount = 0,
       byteCount = 0,
-      emit = function(line, lineCount, byteCount) {
-        self.emit('line', new Buffer(line).toString(), lineCount, byteCount);
+      emit = function(lineCount, byteCount) {
+        try {
+          self.emit('line', lineBuffer.slice(0, lineLength).toString(), lineCount, byteCount);
+        } catch (err) {
+          self.emit('error', err);
+        } finally {
+          lineLength = 0; // Empty buffer.
+        }
       };
-    this.input = ('string' === typeof file)? fs.createReadStream(file, opts):file;
+    this.input = ('string' === typeof file) ? fs.createReadStream(file, opts) : file;
     this.input.on('open', function(fd) {
         self.emit('open', fd);
     })
@@ -22,10 +30,10 @@ var readLine = module.exports = function(file, opts) {
      for (var i = 0; i < data.length; i++) {
         if (data[i] == 10 || data[i] == 13) { // Newline char was found.
           lineCount++;
-          if (line.length) emit(line, lineCount, byteCount);
-          line = []; // Empty buffer.
+          if (lineLength) emit(lineCount, byteCount);
         } else {
-          line.push(data[i]); // Buffer new line data.
+          lineBuffer[lineLength] = data[i]; // Buffer new line data.
+          lineLength++;
         }
         byteCount++;
      }
@@ -35,9 +43,9 @@ var readLine = module.exports = function(file, opts) {
   })
   .on('end', function() {
     // Emit last line if anything left over since EOF won't trigger it.
-    if (line.length) {
+    if (lineLength) {
       lineCount++;
-      emit(line, lineCount, byteCount);
+      emit(lineCount, byteCount);
     }
     self.emit('end');
   })
