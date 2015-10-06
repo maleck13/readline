@@ -29,8 +29,10 @@ var readLine = module.exports = function(file, opts) {
   .on('data', function(data) {
      for (var i = 0; i < data.length; i++) {
         if (data[i] == 10 || data[i] == 13) { // Newline char was found.
-          lineCount++;
-          if (lineLength) emit(lineCount, byteCount);
+          if (data[i] == 10) {
+            lineCount++;
+            emit(lineCount, byteCount);
+          }
         } else {
           lineBuffer[lineLength] = data[i]; // Buffer new line data.
           lineLength++;
