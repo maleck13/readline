@@ -3,7 +3,7 @@ var fs = require('fs'),
     util = require('util');
 
 var readLine = module.exports = function(file, opts) {
-  if (!(this instanceof readLine)) return new readLine(file);
+  if (!(this instanceof readLine)) return new readLine(file, opts);
 
   EventEmitter.call(this);
   opts = opts || {};
