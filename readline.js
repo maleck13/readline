@@ -8,6 +8,7 @@ var readLine = module.exports = function(file, opts) {
   EventEmitter.call(this);
   opts = opts || {};
   opts.maxLineLength = opts.maxLineLength || 4096; // 4K
+  opts.retainBuffer = !!opts.retainBuffer; //do not convert to String prior to invoking emit 'line' event
   var self = this,
       lineBuffer = new Buffer(opts.maxLineLength),
       lineLength = 0,
@@ -15,7 +16,8 @@ var readLine = module.exports = function(file, opts) {
       byteCount = 0,
       emit = function(lineCount, byteCount) {
         try {
-          self.emit('line', lineBuffer.slice(0, lineLength).toString(), lineCount, byteCount);
+          var line = lineBuffer.slice(0, lineLength);
+          self.emit('line', opts.retainBuffer? line : line.toString(), lineCount, byteCount);
         } catch (err) {
           self.emit('error', err);
         } finally {
