@@ -24,12 +24,12 @@ var readLine = module.exports = function(file, opts) {
           lineLength = 0; // Empty buffer.
         }
       };
-    this.input = ('string' === typeof file) ? fs.createReadStream(file, opts) : file;
-    this.input.on('open', function(fd) {
-        self.emit('open', fd);
+  this.input = ('string' === typeof file) ? fs.createReadStream(file, opts) : file;
+  this.input.on('open', function(fd) {
+      self.emit('open', fd);
     })
-  .on('data', function(data) {
-     for (var i = 0; i < data.length; i++) {
+    .on('data', function(data) {
+      for (var i = 0; i < data.length; i++) {
         if (data[i] == 10 || data[i] == 13) { // Newline char was found.
           if (data[i] == 10) {
             lineCount++;
@@ -40,21 +40,21 @@ var readLine = module.exports = function(file, opts) {
           lineLength++;
         }
         byteCount++;
-     }
-  })
-  .on('error', function(err) {
-    self.emit('error', err);
-  })
-  .on('end', function() {
-    // Emit last line if anything left over since EOF won't trigger it.
-    if (lineLength) {
-      lineCount++;
-      emit(lineCount, byteCount);
-    }
-    self.emit('end');
-  })
-  .on('close', function() {
-    self.emit('close');
-  });
+      }
+    })
+    .on('error', function(err) {
+      self.emit('error', err);
+    })
+    .on('end', function() {
+      // Emit last line if anything left over since EOF won't trigger it.
+      if (lineLength) {
+        lineCount++;
+        emit(lineCount, byteCount);
+      }
+      self.emit('end');
+    })
+    .on('close', function() {
+      self.emit('close');
+    });
 };
 util.inherits(readLine, EventEmitter);
