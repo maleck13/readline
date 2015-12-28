@@ -11,7 +11,7 @@ test("test reading lines",function(t){
    rl.on("end",function (){
    	t.end();
    });
-   
+
 });
 
 test("numbers", function (t){
@@ -113,4 +113,26 @@ test("processing error passed on", function(t){
     t.ok(lineCalls === 7, 'line count ok');
     t.end();
   });
+});
+
+test("test ascii file reading",function(t){
+  var iconv = require('iconv-lite');
+  var testFileValidationKeywords = {
+    1: 'папка',
+    3: 'телефон',
+    11: 'электричество',
+    14: 'дерево'
+  };
+
+  var rl = readLine('./fixtures/file-in-win1251.txt', {
+    retainBuffer: true
+  });
+  rl.on("line", function (data,linecount){
+    var line = iconv.decode(data, 'win1251');
+    t.ok(!testFileValidationKeywords[linecount] || line.indexOf(testFileValidationKeywords[linecount]) > -1);
+  });
+  rl.on("end",function (){
+    t.end();
+  });
+
 });
