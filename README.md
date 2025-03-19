@@ -3,7 +3,7 @@
 
 ## Install
 
-## Important. In node 10 there is a core module named readline. Please use linebyline instead, it is the same module just renamed:
+## Important. Since node 0.10 there is a core module named readline. Please use linebyline instead, it is the same module just renamed:
 [Npm linebyline](https://www.npmjs.com/package/linebyline)
 
 ```sh
